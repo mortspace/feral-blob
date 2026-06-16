@@ -1,7 +1,7 @@
 {
   "name": "feral-blob",
   "version": "0.1.0",
-  "description": "A playful, pokeable SVG jelly-blob mascot for React — emotive faces, a physics-y idle wobble, and a fully theme-able palette via CSS vars, plus a matching iOS-style logout modal. Part of FeralUI.",
+  "description": "A playful, pokeable SVG jelly-blob mascot for React — emotive faces, a physics-y idle wobble, and a fully theme-able palette via CSS vars. Part of FeralUI.",
   "type": "module",
   "license": "MIT",
   "author": "mortspace",
@@ -22,7 +22,6 @@
     "animation",
     "motion",
     "framer-motion",
-    "logout-modal",
     "feralui"
   ],
   "sideEffects": [
@@ -37,7 +36,6 @@
       "import": "./dist/feral-blob.js"
     },
     "./blob.css": "./styles/blob.css",
-    "./bunny.css": "./styles/bunny.css",
     "./package.json": "./package.json"
   },
   "files": [

@@ -6,4 +6,3 @@ export {
   type JellyBlobMascotProps,
   type BlobSpeechProps,
 } from './JellyBlobMascot'
-export { BunnyLogoutModal, type LogoutMood, type BunnyLogoutModalProps } from './Bunny'

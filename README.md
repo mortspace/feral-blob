@@ -1,6 +1,6 @@
 # feral-blob
 
-A playful, pokeable SVG jelly-blob mascot for React. It has a handful of moods, a slow physics-y idle wobble, blinks and little hand fidgets, and a fully theme-able palette driven entirely by CSS custom properties — so the same component renders as a violet, mint, coral or gold jelly just by setting a few vars on a wrapper. Ships with `BlobSpeech` (a speech cloud that hugs its text) and a matching iOS-style `BunnyLogoutModal`.
+A playful, pokeable SVG jelly-blob mascot for React. It has a handful of moods, a slow physics-y idle wobble, blinks and little hand fidgets, and a fully theme-able palette driven entirely by CSS custom properties — so the same component renders as a violet, mint, coral or gold jelly just by setting a few vars on a wrapper. Ships with `BlobSpeech`, a speech cloud that hugs its text.
 
 Part of [FeralUI](https://github.com/mortspace).
 
@@ -74,40 +74,6 @@ Drive `mood`, `gaze`, and `nod` from your own state and the blob will read along
 | `nod`        | `boolean`                                  | `false`     | Subtle talking wobble.                                                   |
 | `onOverpoke` | `() => void`                               | —           | Fired when poked past its patience; the blob also shakes.               |
 | `className`  | `string`                                   | —           | Class applied to the root `<svg>`.                                       |
-
-## Logout modal
-
-`BunnyLogoutModal` is a drop-in confirmation card that reacts to where you point — hovering "Log out" makes its mascot sad, "Cancel" makes it happy, the × makes it angry. Pass any mascot, including the blob:
-
-```tsx
-import { BunnyLogoutModal, JellyBlobMascot } from 'feral-blob'
-import 'feral-blob/blob.css'
-import 'feral-blob/bunny.css'
-
-<BunnyLogoutModal
-  showCloseButton
-  mascot={(mood) => <JellyBlobMascot mood={mood} />}
-  onCancel={() => {}}
-  onLogout={() => {}}
-/>
-```
-
-### `BunnyLogoutModal` props
-
-| Prop              | Type                                              | Default                                            | Description                                          |
-| ----------------- | ------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------- |
-| `mascot`          | `ReactNode \| ((mood: LogoutMood) => ReactNode)`  | —                                                  | Node, or a render-fn given the current mood.         |
-| `onCancel`        | `() => void`                                      | —                                                  | Fired by the Cancel button.                          |
-| `onLogout`        | `() => void`                                      | —                                                  | Fired by the Log out button.                         |
-| `onClose`         | `() => void`                                      | falls back to `onCancel`                           | Fired by Escape and the × button.                    |
-| `showCloseButton` | `boolean`                                         | `false`                                            | Renders the × (drives the angry mood while hovered). |
-| `title`           | `string`                                          | `'Log Out?'`                                       | Heading text.                                        |
-| `description`     | `string`                                          | `"You'll need to sign in again…"`                  | Body text.                                           |
-| `cancelLabel`     | `string`                                          | `'Cancel'`                                         | Cancel button label.                                 |
-| `logoutLabel`     | `string`                                          | `'Log Out'`                                        | Log out button label.                                |
-| `className`       | `string`                                          | —                                                  | Class applied to the card.                           |
-
-The card owns its own light/dark theming and is a plain card — the host owns any overlay.
 
 ## License
 
