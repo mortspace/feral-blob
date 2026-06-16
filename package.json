@@ -1,0 +1,69 @@
+{
+  "name": "feral-blob",
+  "version": "0.1.0",
+  "description": "A playful, pokeable SVG jelly-blob mascot for React — emotive faces, a physics-y idle wobble, and a fully theme-able palette via CSS vars, plus a matching iOS-style logout modal. Part of FeralUI.",
+  "type": "module",
+  "license": "MIT",
+  "author": "mortspace",
+  "homepage": "https://github.com/mortspace/feral-blob#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mortspace/feral-blob.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mortspace/feral-blob/issues"
+  },
+  "keywords": [
+    "react",
+    "svg",
+    "mascot",
+    "blob",
+    "jelly",
+    "animation",
+    "motion",
+    "framer-motion",
+    "logout-modal",
+    "feralui"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/feral-blob.js",
+  "module": "./dist/feral-blob.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/feral-blob.js"
+    },
+    "./blob.css": "./styles/blob.css",
+    "./bunny.css": "./styles/bunny.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "styles",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "motion": ">=11",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "motion": "^12.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}

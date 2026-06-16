@@ -1,0 +1,182 @@
+/* ── the log-out card ───────────────────────────────────────────────────────
+   A plain card (the host owns any overlay/focus). Themed dark by default to
+   match this project's convention (:root is dark; :root[data-theme='light']
+   opts into light — same as crumple.css). The `.bunny-*` class prefix is a
+   legacy name from when this hosted a bunny mascot; it's just a modal now. */
+.bunny-modal {
+  /* iOS dark elevated surface + system label tones */
+  --_card: #1c1c1f;
+  --_border: rgba(255, 255, 255, 0.08);
+  --_title: #f5f5f7; /* primary label */
+  --_text: #9b9ba1; /* secondary label */
+  --_chip: #2c2c2e; /* tertiary fill (Cancel) */
+  --_chip-hover: #3a3a3c;
+  --_chip-line: rgba(255, 255, 255, 0.06);
+  --_danger: #ff453a; /* systemRed (dark) */
+  --_danger-tint: rgba(255, 69, 58, 0.16);
+  --_focus: #0a84ff; /* systemBlue (dark) */
+
+  position: relative;
+  width: min(340px, 92vw);
+  box-sizing: border-box;
+  /* even side padding; the mascot/tooltip own the upper region, buttons the lower */
+  padding: 22px 22px 20px;
+  text-align: center;
+  background: var(--_card);
+  border: 1px solid var(--_border);
+  border-radius: 26px;
+  /* clean iOS elevation: hairline top sheen → ring → contact → soft mid → deep ambient */
+  box-shadow:
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 0.5px rgba(0, 0, 0, 0.35),
+    0 14px 30px -16px rgba(0, 0, 0, 0.55),
+    0 44px 80px -36px rgba(0, 0, 0, 0.72);
+}
+
+:root[data-theme='light'] .bunny-modal {
+  --_card: #ffffff;
+  --_border: rgba(0, 0, 0, 0.06);
+  --_title: #1c1c1e;
+  --_text: #6e6e73;
+  --_chip: #e9e9eb;
+  --_chip-hover: #dedee0;
+  --_chip-line: rgba(0, 0, 0, 0.06);
+  --_danger: #ff3b30;
+  --_danger-tint: rgba(255, 59, 48, 0.1);
+  --_focus: #007aff;
+  box-shadow:
+    0 0 0 1px rgba(17, 12, 46, 0.03),
+    0 1px 2px rgba(17, 12, 46, 0.05),
+    0 12px 26px -10px rgba(17, 12, 46, 0.1),
+    0 28px 56px -24px rgba(17, 12, 46, 0.2);
+}
+
+/* iOS sheet close: a quiet filled-gray circle, tucked at a consistent inset */
+.bunny-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  color: var(--_text);
+  background: var(--_chip);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition:
+    color 150ms ease,
+    background 150ms ease,
+    transform 120ms ease;
+}
+
+.bunny-modal-close:focus-visible {
+  color: var(--_title);
+  background: var(--_chip-hover);
+  outline: none;
+}
+
+.bunny-modal-close:active {
+  transform: scale(0.92);
+}
+
+/* hover gated so it doesn't stick after a tap on touch devices */
+@media (hover: hover) {
+  .bunny-modal-close:hover {
+    color: var(--_title);
+    background: var(--_chip-hover);
+  }
+}
+
+/* Title — SF-style: 21px semibold, tight optical tracking, sentence case
+   (override the global uppercase h2 rule), sitting tight to the message. */
+.bunny-modal-title {
+  margin: 10px 0 7px;
+  font-size: 1.3125rem; /* 21px */
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.18;
+  color: var(--_title);
+  text-transform: none;
+  text-wrap: balance;
+}
+
+.bunny-modal-text {
+  /* controlled measure (~32ch) keeps the centred copy to 2–3 balanced lines; the looser
+     line-height gives it premium breathing room above the action row */
+  margin: 0 auto 22px;
+  max-width: 32ch;
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.002em;
+  color: var(--_text);
+  text-wrap: balance;
+}
+
+.bunny-modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* iOS rounded action buttons: 17px semibold, ~46px tall, fully filled (no border),
+   gentle press-shrink. Text is grid-centred so the label is optically dead-centre. */
+.bunny-btn {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  min-height: 48px;
+  padding: 0 14px;
+  font: inherit;
+  font-size: 1.0625rem; /* 17px */
+  font-weight: 590;
+  letter-spacing: -0.012em;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    transform 120ms ease;
+}
+
+.bunny-btn:active {
+  transform: scale(0.97);
+}
+
+.bunny-btn:focus-visible {
+  outline: 2.5px solid var(--_focus);
+  outline-offset: 2px;
+}
+
+/* Cancel — the safe, stay-here action: neutral filled chip */
+.bunny-btn-cancel {
+  background: var(--_chip);
+  color: var(--_title);
+}
+
+@media (hover: hover) {
+  .bunny-btn-cancel:hover {
+    background: var(--_chip-hover);
+  }
+}
+
+/* Log out — the destructive one: tinted red, arming to solid red on intent */
+.bunny-btn-logout {
+  background: var(--_danger-tint);
+  color: var(--_danger);
+}
+
+@media (hover: hover) {
+  .bunny-btn-logout:hover {
+    background: var(--_danger);
+    color: #fff;
+  }
+}

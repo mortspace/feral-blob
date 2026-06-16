@@ -1,0 +1,142 @@
+/* Jelly-blob mascot palette. Override any of these on a parent (or :root) to
+   re-skin the blob; the defaults below are the built-in violet jelly. Body,
+   outline, arms, cheeks, eyes, belly glow and in-eye sparkle are all var-driven,
+   and the ground shadow, body shading and angry-puff FX derive from those same
+   vars (outline / arm / body-rim) so they re-tint with the skin. Only the white
+   glints, the near-black mouth and the blue sad-tears stay fixed — they read on
+   every palette. */
+:root {
+  /* body gradient, top → rim */
+  --jelly-body-top: #ecb8ff;
+  --jelly-body-mid: #c57af3;
+  --jelly-body-deep: #a662e8;
+  --jelly-body-rim: #d292fb;
+
+  /* outline */
+  --jelly-outline: #8d52de;
+  --jelly-outline-light: #b66af0;
+
+  /* arms */
+  --jelly-arm-light: #e1a8ff;
+  --jelly-arm-mid: #bc78ed;
+  --jelly-arm-deep: #9c5de2;
+
+  /* cheeks */
+  --jelly-cheek-light: #ffc5e2;
+  --jelly-cheek: #f68fc8;
+  --jelly-cheek-deep: #e87cb9;
+
+  /* eyes */
+  --jelly-eye-light: #37204b;
+  --jelly-eye: #170d25;
+  --jelly-eye-deep: #0d0715;
+
+  /* interior accents */
+  --jelly-belly-glow: #ffb2dc; /* soft glow across the lower belly */
+  --jelly-eye-sparkle: #b471e6; /* the little coloured pop inside each eye */
+}
+
+/* Light theme: the saturated purple ground-shadow/glow reads as a muddy haze on a white card.
+   Swap it for a soft, cool, neutral shadow so the blob sits on white like a premium sticker.
+   The in-SVG ground shadow reads these (fallback = outline ⇒ dark theme + skins keep their glow). */
+:root[data-theme='light'] {
+  --jelly-shadow: #8e88a6;
+  --jelly-shadow-light: #aaa4c0;
+}
+
+/* ── speech cloud (<BlobSpeech>) — ONE inline-SVG silhouette (rounded-rect body + a
+   downward tail) carries the translucent glass fill AND a single uniform stroke, so the
+   bubble + tail are one shape with one continuous outline. No backdrop-filter — a
+   translucent fill reads identically over the near-solid #1a1a1e modal card. Per-mood tint
+   drives the fill. The box is 56px tall; its WIDTH is set inline (px) from the measured text so
+   the cloud hugs each line, and the viewBox maps 1:1 to that width so the stroke stays crisp.
+   (The old border + ::after caret are gone — the path is the only fill and the only outline.) */
+.blob-bubble {
+  /* iOS-material colours (uniform across moods): a subtle vertical luminance gradient on the fill
+     so the cloud has depth, and a hairline that catches light at the top edge and fades down.
+     Tuned to the SAME dark family as the modal (card #1c1c1f, chip #2c2c2e) — an elevated dark
+     surface, not a bright grey box, so it reads as part of the modal rather than a separate kit. */
+  --bubble-fill-top: rgba(56, 55, 63, 0.97);
+  --bubble-fill-bottom: rgba(40, 39, 47, 0.98);
+  --bubble-stroke-top: rgba(255, 255, 255, 0.16);
+  --bubble-stroke-bottom: rgba(255, 255, 255, 0.04);
+
+  position: relative;
+  height: 56px; /* 44px body + 12px tail band; width comes from the inline style */
+  margin: 0 auto;
+  color: #f7f7fa;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  /* lift follows the real silhouette (incl. the tail), unlike box-shadow — a SUBTLE iOS-tooltip
+     elevation: a faint contact shadow + a soft, low-opacity ambient one (the lighter chip tone
+     already does most of the "floating" read, so the shadow only needs a whisper) */
+  filter:
+    drop-shadow(0 1px 1px rgba(0, 0, 0, 0.14))
+    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+  will-change: transform, opacity; /* motion owns the float/scale transform; don't add a CSS transform here */
+}
+
+/* the single shape; overflow visible so the centred tail-tip stroke is never clipped */
+.blob-bubble-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* fill + stroke colours come from the SVG gradients (driven by the --bubble-* vars above); here we
+   only hold the hairline width crisp at 1.5 screen px via vector-effect:non-scaling-stroke (JSX). */
+.blob-bubble-stroke {
+  stroke-width: 1.5;
+}
+
+/* hidden ruler — measures the line width (single line, same inherited font) to size the cloud */
+.blob-bubble-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* text overlay — centred in the 44px body region only, so the 12px tail band never drags it low.
+   The cloud is sized to fit (PAD_X each side in JS), so the text never wraps. */
+.blob-bubble-textwrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blob-bubble-text {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ── light theme ─────────────────────────────────────────────────────────────
+   On a light card the dark glass cloud reads as a black box, and a plain white
+   bubble would vanish into the white modal. So light mode turns it into ONE clean
+   frosted-white chip (uniform across moods) — dark text, a hairline edge and a
+   gentle iOS lift — so it sits on the white card like a premium frosted pill. */
+:root[data-theme='light'] .blob-bubble {
+  /* frosted-white chip with a whisper of a top-down gradient + a soft cool hairline */
+  --bubble-fill-top: rgba(255, 255, 255, 0.98);
+  --bubble-fill-bottom: rgba(244, 243, 249, 0.98);
+  --bubble-stroke-top: rgba(20, 16, 40, 0.14);
+  --bubble-stroke-bottom: rgba(20, 16, 40, 0.05);
+
+  color: #2b2735;
+  text-shadow: none;
+  filter: drop-shadow(0 8px 14px rgba(31, 22, 54, 0.12));
+}
