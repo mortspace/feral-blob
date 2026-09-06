@@ -6,34 +6,47 @@
    glints, the near-black mouth and the blue sad-tears stay fixed — they read on
    every palette. */
 :root {
-  /* body gradient, top → rim */
-  --jelly-body-top: #ecb8ff;
-  --jelly-body-mid: #c57af3;
-  --jelly-body-deep: #a662e8;
-  --jelly-body-rim: #d292fb;
+  /* body gradient, top → rim — tuned 2026-07: airier top, a gentler top→mid
+     saturation step (the old mid arrived as a cliff), a slightly deeper cool
+     base for weight, and a more luminous rim-light. Verified against the old
+     ramp with side-by-side sharp renders on dark + light cards. */
+  --jelly-body-top: #f2c9ff;
+  --jelly-body-mid: #cb84f5;
+  --jelly-body-deep: #9f5ce6;
+  --jelly-body-rim: #dd9dff;
 
   /* outline */
-  --jelly-outline: #8d52de;
-  --jelly-outline-light: #b66af0;
+  --jelly-outline: #8a4fd9;
+  --jelly-outline-light: #b970f2;
 
-  /* arms */
-  --jelly-arm-light: #e1a8ff;
-  --jelly-arm-mid: #bc78ed;
-  --jelly-arm-deep: #9c5de2;
+  /* arms — kept a step deeper than the body so the pseudopod reads as goo
+     gathering mass (the CookieBanner arm gradient derives its root from
+     body-rim/body-deep, so these track the body family) */
+  --jelly-arm-light: #e6b1ff;
+  --jelly-arm-mid: #c07eef;
+  --jelly-arm-deep: #9758e0;
 
-  /* cheeks */
-  --jelly-cheek-light: #ffc5e2;
-  --jelly-cheek: #f68fc8;
-  --jelly-cheek-deep: #e87cb9;
+  /* cheeks — deliberately pale: the blush ellipses are also drawn blurred at
+     low opacity in the mascot (airbrushed flush, not sticker ovals), so the
+     paint here should whisper, not shout */
+  --jelly-cheek-light: #ffd9ec;
+  --jelly-cheek: #f9a9d4;
+  --jelly-cheek-deep: #ee97c6;
 
   /* eyes */
   --jelly-eye-light: #37204b;
   --jelly-eye: #170d25;
   --jelly-eye-deep: #0d0715;
+  --jelly-face-ink: #170d25;
+  --jelly-face-soft: #37204b;
+
+  /* love: the heart eyes are DERIVED from the cheek family above (blush hue, chroma pushed,
+     nudged toward magenta) so they follow whatever palette the blob wears. To force a colour
+     set --jelly-heart-light, --jelly-heart and --jelly-heart-deep on the same element. */
 
   /* interior accents */
-  --jelly-belly-glow: #ffb2dc; /* soft glow across the lower belly */
-  --jelly-eye-sparkle: #b471e6; /* the little coloured pop inside each eye */
+  --jelly-belly-glow: #ffbfe3; /* soft glow across the lower belly */
+  --jelly-eye-sparkle: #bb7bf0; /* the little coloured pop inside each eye */
 }
 
 /* Light theme: the saturated purple ground-shadow/glow reads as a muddy haze on a white card.

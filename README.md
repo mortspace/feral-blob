@@ -32,10 +32,24 @@ export function App() {
 ## Moods
 
 ```tsx
-type JellyBlobMood = 'neutral' | 'happy' | 'sad' | 'angry' | 'hmm' | 'sideEye' | 'password'
+type JellyBlobMood =
+  | 'neutral' | 'happy' | 'sad' | 'angry' | 'hmm' | 'sideEye' | 'password'
+  | 'curious' | 'surprised' | 'sleepy' | 'shy' | 'love' | 'wave'
 ```
 
-Each mood reshapes the face and body — `sad` melts the silhouette, `happy` hops with a squash-and-stretch, `sideEye` gives a sly sideways glance, `password` shuts its eyes and looks away. Mood changes spring smoothly from wherever the blob currently is.
+Each mood reshapes the face and body — `sad` melts the silhouette, `happy` hops with a squash-and-stretch, `sideEye` gives a sly sideways glance, `password` shuts its eyes and looks away. Several moods are little behaviours rather than poses: `sleepy` keeps nodding off and startling back, `hmm` lets the eyes wander while it thinks, `shy` peeks up at you and looks away, `curious` darts between two spots, `angry` seethes with a tremble and a vein mark, `love` blooms oversized glossy hearts that beat. Mood changes spring smoothly from wherever the blob currently is.
+
+## Eye styles
+
+```tsx
+<JellyBlobMascot mood="curious" eyeStyle="v2" />
+```
+
+`v1` (default) is the glossy jelly orb with the classic side eye. `v2` is small flat ink bean eyes, plush-toy style, where every mood swaps the eye's shape instead of squashing the same one.
+
+## Poke it
+
+Click or tap the blob and it squashes. Poke it too many times in a row and it shakes and fires `onOverpoke`. Poke a sleeping blob (`mood="sleepy"`) and it stirs; the third poke startles it awake and fires `onWake` — change the mood there to keep it up, or leave it and it dozes back off.
 
 ## Theming
 
@@ -68,12 +82,21 @@ Drive `mood`, `gaze`, and `nod` from your own state and the blob will read along
 | Prop         | Type                                       | Default     | Description                                                              |
 | ------------ | ------------------------------------------ | ----------- | ----------------------------------------------------------------------- |
 | `mood`       | `JellyBlobMood`                            | `'neutral'` | Face and body expression.                                               |
-| `gaze`       | `{ x: number; y: number; intensity?: number }` | `{ x: 0, y: 0 }` | Nudges where it looks, in viewBox units.                          |
-| `happyEyes`  | `'star' \| 'smile'`                        | `'star'`    | Happy-mood eyes: sparkly stars or closed `^_^` arcs.                     |
+| `eyeStyle`   | `'v1' \| 'v2'`                             | `'v1'`      | Glossy orb eyes, or flat ink bean eyes.                                  |
+| `gaze`       | `{ x, y, intensity? }` (numbers or Motion values) | `{ x: 0, y: 0 }` | Nudges where it looks, in viewBox units.                     |
+| `happyEyes`  | `'star' \| 'smile'`                        | `'smile'`   | Happy-mood eyes: closed `^_^` arcs or open eyes with a star glint.       |
 | `mouth`      | `'open' \| 'wide'`                         | —           | Override the mouth open; flip per keystroke for a "talking" effect.      |
 | `nod`        | `boolean`                                  | `false`     | Subtle talking wobble.                                                   |
+| `sparkle`    | `boolean`                                  | `false`     | A tiny want-twinkle in each eye for locked-on moments.                  |
+| `blink`      | `number`                                   | `0`         | Bump to fire a deliberate double-blink.                                  |
+| `celebrate`  | `number`                                   | `0`         | Bump to fire a one-shot burst of stars and hearts from behind the crown. |
+| `stillBody`  | `boolean`                                  | `false`     | Keep the silhouette pinned in `happy` (for hosts that composite against it). |
+| `onPoke`     | `() => void`                               | —           | Fired on every poke that plays the squash.                               |
 | `onOverpoke` | `() => void`                               | —           | Fired when poked past its patience; the blob also shakes.               |
+| `onWake`     | `() => void`                               | —           | Fired when a sleeping blob is poked awake.                               |
 | `className`  | `string`                                   | —           | Class applied to the root `<svg>`.                                       |
+
+Under `prefers-reduced-motion` every loop holds its rest frame and mood changes are instant.
 
 ## License
 

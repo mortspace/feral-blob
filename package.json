@@ -1,6 +1,6 @@
 {
   "name": "feral-blob",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A playful, pokeable SVG jelly-blob mascot for React — emotive faces, a physics-y idle wobble, and a fully theme-able palette via CSS vars. Part of FeralUI.",
   "type": "module",
   "license": "MIT",
